@@ -1,0 +1,16 @@
+.form {
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.064);
+  border: 1px solid rgb(255, 108, 54);
+  width: min(400px, 95%);
+  border-radius: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-sizing: border-box;
+  gap: 1rem;
+}
+.logo {
+  font-size: 1.5rem;
+  align-self: center;
+}

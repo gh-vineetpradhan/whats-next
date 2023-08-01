@@ -1,0 +1,19 @@
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.left > img {
+  align-self: center;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+.btnGrp {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}

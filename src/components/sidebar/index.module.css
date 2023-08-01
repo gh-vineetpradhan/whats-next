@@ -1,0 +1,92 @@
+.wrapper {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transition: 0.2s;
+  z-index: 1;
+}
+.sidebar {
+  height: 100%;
+  max-width: 350px;
+  box-sizing: border-box;
+  border-right: 1px solid #222229;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+.createBtn {
+  display: flex;
+  background-color: transparent;
+  font-size: 1rem;
+  transition: 0.2s;
+  justify-content: center;
+  padding: 0.5rem 0;
+  margin: 0.5rem;
+  color: inherit;
+  border-radius: 0.2rem;
+}
+.createBtn:hover {
+  background-color: rgba(255, 255, 255, 0.064);
+  color: rgb(255, 108, 54);
+}
+.playlists {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.playlist {
+  background-color: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  padding: 0.8rem 1rem;
+  position: relative;
+  text-align: start;
+  transition: 0.2s;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.playlist::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(255, 108, 54);
+  z-index: -1;
+  border-bottom-right-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: 0.2s;
+}
+.playlist:hover:not(.activePlaylist) {
+  background-color: rgba(255, 255, 255, 0.064);
+  color: rgb(255, 108, 54);
+}
+.activePlaylist::before {
+  transform: scaleX(1);
+}
+.playlist > span {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media (width<750px) {
+  .wrapper {
+    display: block;
+  }
+  .sidebar {
+    position: absolute;
+    left: 0;
+    background-color: #00001b;
+  }
+}

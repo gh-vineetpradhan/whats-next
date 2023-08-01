@@ -1,0 +1,63 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  background-color: #00001b;
+  background-image: url("/bg.jpg");
+  height: 100vh;
+  color: rgb(234, 234, 234);
+  overflow: auto;
+}
+.fs-small {
+  font-size: 0.9rem;
+}
+button,
+input {
+  font-family: inherit;
+  outline: none;
+  border: none;
+}
+button {
+  cursor: pointer;
+}
+.mui-icon-btn {
+  color: rgb(255, 108, 54);
+  transition: 0.2s;
+}
+.mui-icon-btn:hover {
+  background-color: rgba(255, 108, 54, 0.2);
+}
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 2rem;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 2rem;
+  background-color: grey;
+}
+
+input {
+  border: 1px solid rgb(255, 108, 54);
+  background-color: transparent;
+  font-size: 0.9rem;
+  color: white;
+  padding: 0.6rem;
+  border-radius: 0.2rem;
+  transition: 0.2s;
+}
+input:focus-visible {
+  box-shadow: 2px 2px 2px rgb(255, 108, 54);
+}
+.contained-btn {
+  background-color: rgb(255, 108, 54);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  transition: 0.2s;
+}
+.contained-btn:hover {
+  background-color: rgb(223, 89, 40);
+}

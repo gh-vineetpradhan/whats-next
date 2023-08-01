@@ -1,0 +1,8 @@
+.btnGrp {
+  display: flex;
+  flex-grow: 1;
+  gap: 0.4rem;
+}
+.btnGrp > button {
+  flex-grow: 1;
+}
