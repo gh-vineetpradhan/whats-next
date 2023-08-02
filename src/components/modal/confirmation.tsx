@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useAppDispatch, type RootState } from "@/store";
 import { setModal } from "@/store/appSlice";
+import { signOut } from "next-auth/react";
 
 import styles from "./index.module.css";
 import cStyles from "./confirmation.module.css";
@@ -27,7 +28,17 @@ export default function ConfirmationModal() {
         >
           No
         </button>
-        <button className="contained-btn">Yes</button>
+        {modal === "Logout" ? (
+          <button className="contained-btn" onClick={() => signOut()}>
+            Yes
+          </button>
+        ) : null}
+        {modal === "Delete Playlist" ? (
+          <button className="contained-btn">Yes</button>
+        ) : null}
+        {modal === "Remove Item" ? (
+          <button className="contained-btn">Yes</button>
+        ) : null}
       </div>
     </div>
   );
