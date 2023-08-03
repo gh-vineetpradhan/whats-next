@@ -2,13 +2,17 @@ import { useSelector } from "react-redux";
 import { useAppDispatch, type RootState } from "@/store";
 import { setModal } from "@/store/appSlice";
 import { signOut } from "next-auth/react";
+import { useDeletePlaylistMutation } from "@/store/playlistApi";
 
 import styles from "./index.module.css";
 import cStyles from "./confirmation.module.css";
 
 export default function ConfirmationModal() {
-  const { modal } = useSelector((state: RootState) => state.app);
+  const { modal, activePlaylist, nav } = useSelector(
+    (state: RootState) => state.app
+  );
   const dispatch = useAppDispatch();
+  const [deletePlaylist] = useDeletePlaylistMutation();
 
   return (
     <div className={styles.playlistForm}>
@@ -34,7 +38,15 @@ export default function ConfirmationModal() {
           </button>
         ) : null}
         {modal === "Delete Playlist" ? (
-          <button className="contained-btn">Yes</button>
+          <button
+            className="contained-btn"
+            onClick={() => {
+              deletePlaylist({ id: activePlaylist._id, type: nav });
+              dispatch(setModal(""));
+            }}
+          >
+            Yes
+          </button>
         ) : null}
         {modal === "Remove Item" ? (
           <button className="contained-btn">Yes</button>

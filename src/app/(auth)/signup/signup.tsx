@@ -60,7 +60,7 @@ export default function Signup() {
     <form className={styles.form} onSubmit={submitHandler}>
       <div className={`${styles.logo} ${nosifier.className}`}>WN</div>
       {errors.username || errors.password ? (
-        <ul className={styles.errors}>
+        <ul className="errors">
           {errors.username ? <li>{errors.username}</li> : null}
           {errors.password ? <li>{errors.password}</li> : null}
         </ul>

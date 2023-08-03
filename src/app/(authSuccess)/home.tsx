@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useAppDispatch } from "@/store";
+import { useAppDispatch, type RootState } from "@/store";
 import { setModal } from "@/store/appSlice";
+import { useSelector } from "react-redux";
 
 import Image from "next/image";
 import styles from "./page.module.css";
@@ -16,12 +17,13 @@ import { IconButton } from "@mui/material";
 
 export default function Home() {
   const [check, setCheck] = useState([...Array(20).fill(false)]);
+  const { activePlaylist } = useSelector((state: RootState) => state.app);
   const dispatch = useAppDispatch();
 
   return (
     <div className={styles.home}>
       <div className={styles.header}>
-        <div className={styles.hTitle}>Playlist 0</div>
+        <div className={styles.hTitle}>{activePlaylist.title}</div>
         <div className={styles.hBtnGrp}>
           <IconButton
             className="mui-icon-btn"

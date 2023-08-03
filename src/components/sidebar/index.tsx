@@ -1,18 +1,25 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useAppDispatch, type RootState } from "@/store";
 import { useSelector } from "react-redux";
+import { useGetPlaylistsQuery } from "@/store/playlistApi";
 import { setActivePlaylist, setModal, setShowSidebar } from "@/store/appSlice";
+import Loading from "../loading";
 
 import styles from "./index.module.css";
 import PlaylistPlayRoundedIcon from "@mui/icons-material/PlaylistPlayRounded";
 
 export default function Sidebar() {
   const dispatch = useAppDispatch();
-  const activePlaylist = useSelector(
-    (state: RootState) => state.app.activePlaylist
-  );
+  const { activePlaylist, nav } = useSelector((state: RootState) => state.app);
+  const playlists = useGetPlaylistsQuery(nav);
+
+  useEffect(() => {
+    playlists.currentData?.[0] &&
+      dispatch(setActivePlaylist(playlists.currentData[0]));
+  }, [Boolean(playlists.currentData?.[0]), nav]);
 
   return (
     <>
@@ -34,6 +41,7 @@ export default function Sidebar() {
         }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
+        {playlists.isLoading || playlists.isFetching ? <Loading /> : null}
         <button
           className={styles.createBtn}
           onClick={() => dispatch(setModal("Create Playlist"))}
@@ -41,19 +49,16 @@ export default function Sidebar() {
           + Add Playlist
         </button>
         <div className={styles.playlists}>
-          {[...Array(20)].map((_d, index) => (
+          {playlists.data?.map((playlist, index) => (
             <button
               key={index}
               className={`${styles.playlist} ${
-                index === activePlaylist ? styles.activePlaylist : ""
+                playlist._id === activePlaylist._id ? styles.activePlaylist : ""
               }`}
-              onClick={() => dispatch(setActivePlaylist(index))}
+              onClick={() => dispatch(setActivePlaylist(playlist))}
             >
               <PlaylistPlayRoundedIcon />
-              <span>
-                Playlist dash dsaiu hdsauid sahuidsah duisah duisah saiuh
-                duisahd asuih ad {index}
-              </span>
+              <span>{playlist.title}</span>
             </button>
           ))}
         </div>

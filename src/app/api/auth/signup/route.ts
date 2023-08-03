@@ -10,7 +10,6 @@ export const POST = async (req: NextRequest) => {
     await connectDB();
     const user = await User.create(body);
     return NextResponse.json(user);
-    // Send Login by NextAuth SignIn function
   } catch (err) {
     const errors = handleErrors(err as Record<string, any>);
     return NextResponse.json(errors, { status: 400 });

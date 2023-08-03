@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { type Playlist } from "./playlistApi";
 
 export interface AppState {
   showSidebar: boolean;
@@ -12,14 +13,14 @@ export interface AppState {
     | "Logout"
     | "";
   nav: "Movies" | "Songs" | "Books" | "Games";
-  activePlaylist: number;
+  activePlaylist: Playlist;
 }
 
 const initialState: AppState = {
   showSidebar: true,
   modal: "",
   nav: "Movies",
-  activePlaylist: 0,
+  activePlaylist: { title: "", type: "Movies", userId: "", _id: "" },
 };
 
 export const appSlice = createSlice({
@@ -50,7 +51,7 @@ export const appSlice = createSlice({
     ) => {
       state.nav = action.payload;
     },
-    setActivePlaylist: (state, action: PayloadAction<number>) => {
+    setActivePlaylist: (state, action: PayloadAction<Playlist>) => {
       state.activePlaylist = action.payload;
     },
   },

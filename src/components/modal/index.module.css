@@ -17,6 +17,7 @@
   border-radius: 0.2rem;
   box-sizing: border-box;
   min-width: min(400px, 95vw);
+  position: relative;
 }
 .playlistForm {
   display: flex;
