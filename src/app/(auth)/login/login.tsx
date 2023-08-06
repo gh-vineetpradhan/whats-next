@@ -66,7 +66,7 @@ export default function Login() {
       />
       <button className="contained-btn">Login</button>
       <span className="fs-small">
-        Doesn't have an account? <Link href="/signup">Signup</Link>
+        Doesn&apos;t have an account? <Link href="/signup">Signup</Link>
       </span>
     </form>
   );
