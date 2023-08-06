@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useAppDispatch, type RootState } from "@/store";
 import { useSelector } from "react-redux";
 import { useGetPlaylistsQuery } from "@/store/playlistApi";
+import { useSession } from "next-auth/react";
 import { setActivePlaylist, setModal, setShowSidebar } from "@/store/appSlice";
 import Loading from "../loading";
 
@@ -15,11 +16,25 @@ export default function Sidebar() {
   const dispatch = useAppDispatch();
   const { activePlaylist, nav } = useSelector((state: RootState) => state.app);
   const playlists = useGetPlaylistsQuery(nav);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    playlists.currentData?.[0] &&
-      dispatch(setActivePlaylist(playlists.currentData[0]));
-  }, [Boolean(playlists.currentData?.[0]), nav]);
+    if (playlists.currentData) {
+      if (playlists.currentData?.[0])
+        dispatch(setActivePlaylist(playlists.currentData[0]));
+      else {
+        if (session?.user.id)
+          dispatch(
+            setActivePlaylist({
+              title: "",
+              type: nav,
+              userId: session.user.id,
+              _id: "",
+            })
+          );
+      }
+    }
+  }, [Boolean(playlists.currentData), nav]);
 
   return (
     <>

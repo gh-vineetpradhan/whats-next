@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface CreatePlaylistArgs {
   title: string;
-  type: "Games" | "Books" | "Songs" | "Movies";
+  type: "Games" | "Books" | "Movies";
 }
 interface UpdatePlaylistArgs {
   id: string;
@@ -47,7 +47,7 @@ export const playlistApi = createApi({
       }),
       async onQueryStarted(
         { id, type, ...body },
-        { dispatch, queryFulfilled, getState }
+        { dispatch, queryFulfilled }
       ) {
         const patchResult = dispatch(
           playlistApi.util.updateQueryData("getPlaylists", type, (draft) =>
@@ -67,10 +67,7 @@ export const playlistApi = createApi({
         method: "DELETE",
         credentials: "include",
       }),
-      async onQueryStarted(
-        { id, type },
-        { dispatch, queryFulfilled, getState }
-      ) {
+      async onQueryStarted({ id, type }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           playlistApi.util.updateQueryData("getPlaylists", type, (draft) =>
             draft.filter((p) => p._id !== id)

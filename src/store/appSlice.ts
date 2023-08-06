@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { type Playlist } from "./playlistApi";
+import { Item } from "./itemApi";
 
 export interface AppState {
   showSidebar: boolean;
@@ -12,15 +13,26 @@ export interface AppState {
     | "Edit Item"
     | "Logout"
     | "";
-  nav: "Movies" | "Songs" | "Books" | "Games";
+  nav: "Movies" | "Books" | "Games";
   activePlaylist: Playlist;
+  modalItem: Item;
 }
 
-const initialState: AppState = {
+export const initialState: AppState = {
   showSidebar: true,
   modal: "",
   nav: "Movies",
   activePlaylist: { title: "", type: "Movies", userId: "", _id: "" },
+  modalItem: {
+    title: "",
+    userId: "",
+    _id: "",
+    hasChecked: false,
+    rating: 0,
+    playlistId: "",
+    date: "",
+    description: "",
+  },
 };
 
 export const appSlice = createSlice({
@@ -45,20 +57,25 @@ export const appSlice = createSlice({
     ) => {
       state.modal = action.payload;
     },
-    setNav: (
-      state,
-      action: PayloadAction<"Movies" | "Songs" | "Books" | "Games">
-    ) => {
+    setNav: (state, action: PayloadAction<"Movies" | "Books" | "Games">) => {
       state.nav = action.payload;
     },
     setActivePlaylist: (state, action: PayloadAction<Playlist>) => {
       state.activePlaylist = action.payload;
     },
+    setModalItem: (state, action: PayloadAction<Item>) => {
+      state.modalItem = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setShowSidebar, setModal, setNav, setActivePlaylist } =
-  appSlice.actions;
+export const {
+  setShowSidebar,
+  setModal,
+  setNav,
+  setActivePlaylist,
+  setModalItem,
+} = appSlice.actions;
 
 export default appSlice.reducer;

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export interface IPlaylist {
   userId: string;
   title: string;
-  type: "Movies" | "Games" | "Songs" | "Books";
+  type: "Movies" | "Games" | "Books";
 }
 
 const playlistSchema = new mongoose.Schema<IPlaylist>(
@@ -20,7 +20,7 @@ const playlistSchema = new mongoose.Schema<IPlaylist>(
     type: {
       type: String,
       default: "Books",
-      enum: ["Movies", "Games", "Songs", "Books"],
+      enum: ["Movies", "Games", "Books"],
     },
   },
   { timestamps: true }

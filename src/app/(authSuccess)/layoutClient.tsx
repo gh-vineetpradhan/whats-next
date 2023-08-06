@@ -18,14 +18,16 @@ export default function LayoutClient({
 }: {
   children: React.ReactNode;
 }) {
-  const { showSidebar, modal } = useSelector((state: RootState) => state.app);
+  const { showSidebar, modal, activePlaylist } = useSelector(
+    (state: RootState) => state.app
+  );
 
   return (
     <>
       <Header />
       <div className={styles.main}>
         <AnimatePresence>{showSidebar ? <Sidebar /> : null}</AnimatePresence>
-        {children}
+        {activePlaylist._id ? children : null}
       </div>
       <AnimatePresence>
         {modal ? (

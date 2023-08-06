@@ -1,0 +1,42 @@
+.wrapper {
+  position: absolute;
+  background-color: #00001b;
+  border: 1px solid rgb(255, 108, 54);
+  left: 0;
+  top: 46px;
+  width: 100%;
+  z-index: 1;
+  box-sizing: border-box;
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  max-height: min(400px, 70vh);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  transform-origin: top;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.card {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  transition: 0.2s;
+}
+.card:hover {
+  background-color: rgba(255, 108, 54, 0.25);
+}
+.card > span {
+  color: rgb(234, 234, 234);
+  font-size: 0.9rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.card > img {
+  flex-shrink: 0;
+}

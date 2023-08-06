@@ -7,7 +7,6 @@ import styles from "./index.module.css";
 import { IconButton } from "@mui/material";
 import MovieRoundedIcon from "@mui/icons-material/MovieRounded";
 import VideogameAssetRoundedIcon from "@mui/icons-material/VideogameAssetRounded";
-import LibraryMusicRoundedIcon from "@mui/icons-material/LibraryMusicRounded";
 import LibraryBooksRoundedIcon from "@mui/icons-material/LibraryBooksRounded";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
@@ -47,15 +46,6 @@ export default function Header() {
         >
           <VideogameAssetRoundedIcon fontSize="small" />
           <span>Games</span>
-        </button>
-        <button
-          className={`fs-small ${styles.navItem} ${
-            nav === "Songs" ? styles.activeNav : ""
-          }`}
-          onClick={() => dispatch(setNav("Songs"))}
-        >
-          <LibraryMusicRoundedIcon fontSize="small" />
-          <span>Songs</span>
         </button>
         <button
           className={`fs-small ${styles.navItem} ${

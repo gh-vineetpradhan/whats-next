@@ -17,3 +17,54 @@
   flex-direction: column;
   gap: 0.4rem;
 }
+.title {
+  font-size: 0.9rem;
+  text-align: center;
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.description {
+  font-size: 0.8rem;
+  color: grey;
+  max-width: 350px;
+}
+.ratingWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.ratingWrapper > span:nth-child(2) {
+  color: grey;
+  font-size: 0.85rem;
+}
+.rating,
+.rating svg {
+  color: rgb(255, 108, 54);
+}
+.titleWrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid rgb(255, 108, 54);
+  padding: 0.6rem;
+  border-radius: 0.2rem;
+  transition: 0.2s;
+}
+.inputWrapper:focus-within {
+  box-shadow: 2px 2px 2px rgb(255, 108, 54);
+}
+.inputWrapper > input {
+  border: none;
+  flex-grow: 1;
+  padding: 0;
+}
+.inputWrapper > input:focus-visible {
+  box-shadow: none;
+}

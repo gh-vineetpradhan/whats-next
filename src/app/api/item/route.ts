@@ -1,9 +1,9 @@
 import connectDB from "@/db/conn";
 import { type NextRequest, NextResponse } from "next/server";
 import handleErrors from "./errorHandler";
-import Playlist from "@/db/models/Playlist";
 import { getServerSession } from "next-auth/next";
 import options from "../auth/[...nextauth]/options";
+import Item from "@/db/models/Item";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
@@ -14,11 +14,11 @@ export const POST = async (req: NextRequest) => {
     await connectDB();
     const session = await getServerSession(options);
     if (session) {
-      const playlist = await Playlist.create({
+      const item = await Item.create({
         ...body,
         userId: session?.user.id,
       });
-      return NextResponse.json(playlist._id);
+      return NextResponse.json(item._id);
     } else {
       return NextResponse.json("Session is empty", { status: 400 });
     }
@@ -29,17 +29,16 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const GET = async (req: NextRequest) => {
-  const type = req.nextUrl.searchParams.get("type");
+  const playlistId = req.nextUrl.searchParams.get("playlistId");
 
   try {
     await connectDB();
     const session = await getServerSession(options);
     if (session) {
-      const playlists = await Playlist.find({
-        userId: session?.user.id,
-        type,
+      const items = await Item.find({
+        playlistId,
       });
-      return NextResponse.json(playlists);
+      return NextResponse.json(items);
     } else {
       return NextResponse.json("Session is empty", { status: 400 });
     }
@@ -47,5 +46,3 @@ export const GET = async (req: NextRequest) => {
     return NextResponse.json(err, { status: 400 });
   }
 };
-
-// Delete or Update if request is send by userId

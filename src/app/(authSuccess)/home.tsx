@@ -1,24 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import { useAppDispatch, type RootState } from "@/store";
-import { setModal } from "@/store/appSlice";
+import { initialState, setModal, setModalItem } from "@/store/appSlice";
 import { useSelector } from "react-redux";
+import { useGetItemsQuery, useUpdateItemMutation } from "@/store/itemApi";
+
+import Loading from "@/components/loading";
 
 import Image from "next/image";
 import styles from "./page.module.css";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import { IconButton } from "@mui/material";
+import { IconButton, Rating } from "@mui/material";
 
 export default function Home() {
-  const [check, setCheck] = useState([...Array(20).fill(false)]);
   const { activePlaylist } = useSelector((state: RootState) => state.app);
   const dispatch = useAppDispatch();
+  const getItems = useGetItemsQuery(activePlaylist._id);
+  const [updateItem] = useUpdateItemMutation();
 
   return (
     <div className={styles.home}>
@@ -43,45 +45,75 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.items}>
+        {getItems.isFetching || getItems.isLoading ? <Loading /> : null}
         <div
           className={`${styles.create} ${styles.card}`}
-          onClick={() => dispatch(setModal("Add Item"))}
+          onClick={() => {
+            dispatch(setModal("Add Item"));
+            dispatch(setModalItem(initialState.modalItem));
+          }}
         >
           <AddRoundedIcon sx={{ fontSize: "4rem" }} />
           <span>Add Projects</span>
         </div>
-        {[...Array(20)].map((_d, index) => (
+        {getItems.data?.map((item, index) => (
           <div className={`${styles.item} ${styles.card}`} key={index}>
-            {check[index] ? (
+            {item.hasChecked ? (
               <CheckCircleRoundedIcon className={styles.muiCheckIcon} />
             ) : null}
-            <Image src="/oppenheimer.jpg" width={148} height={190} alt="Item" />
-            <span className={styles.title}>Oppenheimer</span>
+            <Image
+              src={item.image || "/placeholder.jpg"}
+              width={148}
+              height={190}
+              alt="Item"
+              placeholder="blur"
+              blurDataURL="/placeholder.jpg"
+            />
+            <span className={styles.title}>
+              {item.title}({item.date})
+            </span>
             <div className={styles.hovered}>
-              <span className={styles.rating}>
-                <StarRoundedIcon />
-                <span>4.7/5</span>
-              </span>
+              <Rating
+                name="read-only"
+                value={item.rating}
+                readOnly
+                className={styles.rating}
+              />
               <div className={styles.btnGrp}>
-                <IconButton
-                  className={`${styles.muiIconBtn} mui-icon-btn`}
-                  onClick={() =>
-                    setCheck((prev) => [
-                      ...prev.slice(0, index),
-                      !prev[index],
-                      ...prev.slice(index + 1),
-                    ])
-                  }
-                >
-                  {check[index] ? (
+                {item.hasChecked ? (
+                  <IconButton
+                    className={`${styles.muiIconBtn} mui-icon-btn`}
+                    onClick={() =>
+                      updateItem({
+                        id: item._id,
+                        playlistId: activePlaylist._id,
+                        hasChecked: false,
+                      })
+                    }
+                  >
                     <CheckCircleRoundedIcon />
-                  ) : (
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    className={`${styles.muiIconBtn} mui-icon-btn`}
+                    onClick={() =>
+                      updateItem({
+                        id: item._id,
+                        playlistId: activePlaylist._id,
+                        hasChecked: true,
+                      })
+                    }
+                  >
                     <CheckCircleOutlineRoundedIcon />
-                  )}
-                </IconButton>
+                  </IconButton>
+                )}
+
                 <IconButton
                   className={`${styles.muiIconBtn} mui-icon-btn`}
-                  onClick={() => dispatch(setModal("Edit Item"))}
+                  onClick={() => {
+                    dispatch(setModal("Edit Item"));
+                    dispatch(setModalItem(item));
+                  }}
                 >
                   <EditRoundedIcon />
                 </IconButton>

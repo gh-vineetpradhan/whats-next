@@ -11,7 +11,10 @@ import {
 import { setModal } from "@/store/appSlice";
 
 import styles from "./index.module.css";
+import playlistStyles from "./playlist.module.css";
 import Loading from "../loading";
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function PlaylistModal() {
   const [errors, setErrors] = useState({ title: "" });
@@ -58,7 +61,13 @@ export default function PlaylistModal() {
     <form onSubmit={formSubmitHandler} className={styles.playlistForm}>
       {cpStatus.isLoading ? <Loading /> : null}
       <div className={styles.header}>
-        {modal === "Create Playlist" ? "Create Playlist" : "Edit Playlist"}
+        {modal === "Create Playlist" ? "Create Playlist" : "Edit Playlist"}{" "}
+        <IconButton
+          onClick={() => dispatch(setModal(""))}
+          className="mui-icon-btn"
+        >
+          <CloseIcon htmlColor="grey" fontSize="small" />
+        </IconButton>
       </div>
       {errors.title ? (
         <ul className="errors">
@@ -71,6 +80,7 @@ export default function PlaylistModal() {
         onChange={(e) => setPlaylistTitle(e.target.value)}
         placeholder="Title"
         maxLength={40}
+        className={playlistStyles.titleInput}
       />
       <button className="contained-btn">
         {modal === "Create Playlist" ? "Create" : "Update"}

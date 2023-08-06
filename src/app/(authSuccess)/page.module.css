@@ -27,6 +27,7 @@
   overflow: auto;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
 }
 .card {
   height: 220px;
@@ -65,8 +66,7 @@
   z-index: -1;
 }
 .title {
-  display: flex;
-  justify-content: center;
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -87,16 +87,23 @@
   transition: 0.2s;
   gap: 0.5rem;
 }
+
 .rating {
   display: flex;
   align-items: center;
   color: transparent;
+  transition: 0.2s;
 }
-.item:hover .rating {
+.rating svg {
+  color: transparent;
+  transition: 0.2s;
+}
+.item:hover .rating,
+.item:hover .rating svg {
   color: rgb(255, 108, 54);
 }
 .rating > span {
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 .muiIconBtn {
   padding: 6px;

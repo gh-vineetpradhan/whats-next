@@ -2,14 +2,14 @@ import connectDB from "@/db/conn";
 import { NextResponse, type NextRequest } from "next/server";
 import { getServerSession } from "next-auth/next";
 import options from "../../auth/[...nextauth]/options";
-import Playlist from "@/db/models/Playlist";
 import handleErrors from "../errorHandler";
+import Item from "@/db/models/Item";
 
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const playlistId = params.id;
+  const itemId = params.id;
   const body = await req.json();
   delete body.userId;
   delete body._id;
@@ -18,12 +18,12 @@ export async function PATCH(
     await connectDB();
     const session = await getServerSession(options);
     if (session) {
-      const playlist = await Playlist.findById(playlistId);
-      if (playlist.userId === session.user.id) {
-        await Playlist.findByIdAndUpdate(playlistId, body, {
+      const item = await Item.findById(itemId);
+      if (item.userId === session.user.id) {
+        await Item.findByIdAndUpdate(itemId, body, {
           runValidators: true,
         });
-        return NextResponse.json(playlist._id);
+        return NextResponse.json(item._id);
       } else {
         return NextResponse.json(
           "You are not authorized to update this account",
@@ -42,15 +42,15 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const playlistId = params.id;
+  const itemId = params.id;
   try {
     await connectDB();
     const session = await getServerSession(options);
     if (session) {
-      const playlist = await Playlist.findById(playlistId);
-      if (playlist.userId === session.user.id) {
-        await Playlist.findByIdAndDelete(playlistId);
-        return NextResponse.json(playlist._id);
+      const item = await Item.findById(itemId);
+      if (item.userId === session.user.id) {
+        await Item.findByIdAndDelete(itemId);
+        return NextResponse.json(item._id);
       } else {
         return NextResponse.json(
           "You are not authorized to update this account",
